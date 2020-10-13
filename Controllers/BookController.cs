@@ -1,22 +1,30 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using DotnetWebApp.Models;
+using DotnetWebApp.Repository;
+using Microsoft.AspNetCore.Mvc;
+using System;
+using System.Collections.Generic;
 
 namespace DotnetWebApp.Controllers
 {
     public class BookController : Controller
     {
-        public string GetAllBooks()
+        private readonly BookRepository _bookRepository = null;
+
+        public BookController() => _bookRepository = new BookRepository();
+
+        public List<BookModel> GetAllBooks()
         {
-            return "All books";
+            return _bookRepository.GetAllBooks();
         }
 
-        public string GetBook(int id)
+        public BookModel GetBook(int id)
         {
-            return $"Book with id = {id}";
+            return _bookRepository.GetBookById(id);
         }
 
-        public string SearchBooks(string bookName, string authorName)
+        public List<BookModel> SearchBooks(string title, string authorName)
         {
-            return $"Book name = {bookName} & Author = {authorName}";
+            return _bookRepository.SearchBook(title, authorName);
         }
     }
 }
